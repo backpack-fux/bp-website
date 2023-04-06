@@ -1,0 +1,45 @@
+# .github/workflows/main.yaml
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x, 19.x]
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Install dependencies
+      run: pnpm install
+
+    - name: Build
+      run: pnpm build
+
+    - name: Test
+      run: pnpm test
+
+    - name: Lint
+      run: pnpm lint
+
+    - name: Install Tailwind CSS dependencies
+      run: pnpm add tailwindcss@latest postcss@latest autoprefixer@latest
+
+    - name: Install tRPC dependencies
+      run: pnpm add @trpc/server @trpc/client @trpc/react-query @trpc/next @tanstack/react-query
