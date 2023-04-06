@@ -29,6 +29,12 @@ jobs:
     - name: Install dependencies
       run: pnpm install
 
+    - name: Install Tailwind CSS dependencies
+      run: pnpm add tailwindcss@latest postcss@latest autoprefixer@latest
+
+    - name: Install tRPC dependencies
+      run: pnpm add @trpc/server @trpc/client @trpc/react-query @trpc/next @tanstack/react-query
+
     - name: Build
       run: pnpm build
 
@@ -38,8 +44,12 @@ jobs:
     - name: Lint
       run: pnpm lint
 
-    - name: Install Tailwind CSS dependencies
-      run: pnpm add tailwindcss@latest postcss@latest autoprefixer@latest
+    - name: Generate Prisma Client
+      run: pnpm prisma generate
 
-    - name: Install tRPC dependencies
-      run: pnpm add @trpc/server @trpc/client @trpc/react-query @trpc/next @tanstack/react-query
+    - name: Install Pinecone dependencies
+      run: pnpm add pinecone-client
+
+    - name: Deploy with Vercel
+      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      run: vercel --token ${{ secrets.VERCEL_TOKEN }} --prod

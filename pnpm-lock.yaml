@@ -1,6 +1,9 @@
 lockfileVersion: '6.0'
 
 dependencies:
+  '@pinecone-database/pinecone':
+    specifier: ^0.0.12
+    version: 0.0.12
   '@tanstack/react-query':
     specifier: ^4.28.0
     version: 4.28.0(react-dom@18.2.0)(react@18.2.0)
@@ -33,10 +36,19 @@ dependencies:
     version: 13.2.4(eslint@8.37.0)(typescript@5.0.3)
   langchain:
     specifier: ^0.0.49
-    version: 0.0.49
+    version: 0.0.49(@pinecone-database/pinecone@0.0.12)
   next:
     specifier: 13.2.4
     version: 13.2.4(react-dom@18.2.0)(react@18.2.0)
+  nextjs-openai:
+    specifier: ^4.0.0
+    version: 4.0.0
+  openai-streams:
+    specifier: ^5.0.0
+    version: 5.0.0
+  pinecone-client:
+    specifier: ^1.1.0
+    version: 1.1.0
   postcss-nested:
     specifier: ^6.0.1
     version: 6.0.1(postcss@8.4.21)
@@ -288,6 +300,15 @@ packages:
     dependencies:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.15.0
+
+  /@pinecone-database/pinecone@0.0.12:
+    resolution: {integrity: sha512-YI9IQ7/0k6jI+NUyTD+I2BvwUGhOMRgMpx/qx/v5t5Cm31vSdnXEgGfh9jILUpi/+j59vtK+O5rB+pV5v1L15w==}
+    engines: {node: '>=14.0.0'}
+    dependencies:
+      cross-fetch: 3.1.5
+    transitivePeerDependencies:
+      - encoding
+    dev: false
 
   /@pkgr/utils@2.3.1:
     resolution: {integrity: sha512-wfzX8kc1PMyUILA+1Z/EqoE4UCXGy0iRGMhPwdfae1+f0OXlLqCk+By+aMzgJBzR9AzS4CDizioG6Ss1gvAFJw==}
@@ -873,6 +894,11 @@ packages:
       esutils: 2.0.3
     dev: false
 
+  /dotenv@16.0.3:
+    resolution: {integrity: sha512-7GO6HghkA5fYG9TYnNxi14/7K9f5occMlp3zXAuSxn7CKCxt9xbNWG7yF8hTCSUchlfWSe3uLmlPfigevRItzQ==}
+    engines: {node: '>=12'}
+    dev: false
+
   /electron-to-chromium@1.4.353:
     resolution: {integrity: sha512-IdJVpMHJoBT/nn0GQ02wPfbhogDVpd1ud95lP//FTf5l35wzxKJwibB4HBdY7Q+xKPA1nkZ0UDLOMyRj5U5IAQ==}
     dev: true
@@ -1254,6 +1280,11 @@ packages:
 
   /eventemitter3@4.0.7:
     resolution: {integrity: sha512-8guHBZCwKnFhYdHr2ysuRWErTwhoN2X8XELRlrRwpmfeY2jjuUN4taQMsULKUVo1K4DvZl+0pgfyoysHxvmvEw==}
+    dev: false
+
+  /eventsource-parser@0.1.0:
+    resolution: {integrity: sha512-M9QjFtEIkwytUarnx113HGmgtk52LSn3jNAtnWKi3V+b9rqSfQeVdLsaD5AG/O4IrGQwmAAHBIsqbmURPTd2rA==}
+    engines: {node: '>=14.18'}
     dev: false
 
   /exponential-backoff@3.1.1:
@@ -1801,7 +1832,12 @@ packages:
       object.assign: 4.1.4
     dev: false
 
-  /langchain@0.0.49:
+  /ky@0.33.3:
+    resolution: {integrity: sha512-CasD9OCEQSFIam2U8efFK81Yeg8vNMTBUqtMOHlrcWQHqUX3HeCl9Dr31u4toV7emlH8Mymk5+9p0lL6mKb/Xw==}
+    engines: {node: '>=14.16'}
+    dev: false
+
+  /langchain@0.0.49(@pinecone-database/pinecone@0.0.12):
     resolution: {integrity: sha512-7aNfcD1WFIMqQnQ5rdDGYahrGMkfGcqMCbsajBLHnO3JeXYmGgsjVp5BSeBm7eqp9Rsxlto6f5Z8Grr5RRe49g==}
     engines: {node: '>=18'}
     peerDependencies:
@@ -1866,6 +1902,7 @@ packages:
     dependencies:
       '@anthropic-ai/sdk': 0.4.3
       '@fortaine/fetch-event-source': 3.0.6
+      '@pinecone-database/pinecone': 0.0.12
       browser-or-node: 2.1.1
       exponential-backoff: 3.1.1
       expr-eval: 2.0.2
@@ -2039,6 +2076,17 @@ packages:
       - babel-plugin-macros
     dev: false
 
+  /nextjs-openai@4.0.0:
+    resolution: {integrity: sha512-HZ2M1ka8r9SqvIlMv/xiuaCi+COh+zG9P0h79QL24d+H2BDtTAGhl9PFbbOOaBxn9r4GM45hh/DBeujWOteyIw==}
+    engines: {node: '>=18'}
+    dependencies:
+      eventsource-parser: 0.1.0
+      openai-streams: 5.0.0
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+      yield-stream: 2.3.0
+    dev: false
+
   /node-fetch@2.6.7:
     resolution: {integrity: sha512-ZjMPFEfVx5j+y2yF35Kzx5sF7kDzxuDj6ziH4FFbOp87zKDZNx8yExJIb05OGF4Nlt9IHFIMBkRl41VdvcNdbQ==}
     engines: {node: 4.x || >=6.0.0}
@@ -2148,6 +2196,15 @@ packages:
       is-wsl: 2.2.0
     dev: false
 
+  /openai-streams@5.0.0:
+    resolution: {integrity: sha512-IJL5dklgXu3m8rSNhBYrJxOXMtZrOdXBxowHsIMjMDLsfO+vvByOwOwwHF89M3bsuJdfV4L8LuazdXldD3fYOg==}
+    engines: {node: '>=14'}
+    dependencies:
+      dotenv: 16.0.3
+      eventsource-parser: 0.1.0
+      yield-stream: 3.0.0
+    dev: false
+
   /openai@3.2.1:
     resolution: {integrity: sha512-762C9BNlJPbjjlWZi4WYK9iM2tAVAv0uUp1UmI34vb0CN5T2mjB/qM6RYBmNKMh/dN9fC+bxqPwWJZUTWW052A==}
     dependencies:
@@ -2243,6 +2300,12 @@ packages:
     resolution: {integrity: sha512-udgsAY+fTnvv7kI7aaxbqwWNb0AHiB0qBO89PZKPkoTmGOgdbrHDKD+0B2X4uTfJ/FT1R09r9gTsjUjNJotuog==}
     engines: {node: '>=0.10.0'}
     dev: true
+
+  /pinecone-client@1.1.0:
+    resolution: {integrity: sha512-+5kW2OwW/eo3W/MKIktEhRYwq1PwmZdxTOGi34WZbpbt0C4OpzjW2uUx92bdU2/EnUw/A9M870g3y/vAL1H2HA==}
+    dependencies:
+      ky: 0.33.3
+    dev: false
 
   /pirates@4.0.5:
     resolution: {integrity: sha512-8V9+HQPupnaXMA23c5hvl69zXvTwTzyAYasnkb0Tts4XvO4CliqONMOnvlq26rkhLC3nWDFBJf73LU1e1VZLaQ==}
@@ -2501,6 +2564,11 @@ packages:
   /shebang-regex@3.0.0:
     resolution: {integrity: sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==}
     engines: {node: '>=8'}
+    dev: false
+
+  /shim-streams@0.0.2:
+    resolution: {integrity: sha512-9Otb+FCl13XxRp1nVddtsCbwvB7AEMTjzc3/fixowyzvSVoCzu/VEstblB2SdIDbd61u5D/zpS5u9fGzDdOoZg==}
+    engines: {node: '>=14'}
     dev: false
 
   /side-channel@1.0.4:
@@ -2809,6 +2877,11 @@ packages:
     hasBin: true
     dev: false
 
+  /web-streams-polyfill@3.2.1:
+    resolution: {integrity: sha512-e0MO3wdXWKrLbL0DgGnUV7WHVuw9OUvL4hjgnPkIeEvESk74gAITi5G606JtZPp39cd8HA9VQzCIvA49LpPN5Q==}
+    engines: {node: '>= 8'}
+    dev: false
+
   /webidl-conversions@3.0.1:
     resolution: {integrity: sha512-2JAn3z8AR6rjK8Sm8orRC0h/bcl/DqL7tRPdGZ4I1CjdF+EaMLmYxBHyXuKL849eucPFhvBoxMsflfOb8kxaeQ==}
     dev: false
@@ -2879,6 +2952,22 @@ packages:
   /yaml@2.2.1:
     resolution: {integrity: sha512-e0WHiYql7+9wr4cWMx3TVQrNwejKaEe7/rHNmQmqRjazfOP5W8PB6Jpebb5o6fIapbz9o9+2ipcaTM2ZwDI6lw==}
     engines: {node: '>= 14'}
+    dev: false
+
+  /yield-stream@2.3.0:
+    resolution: {integrity: sha512-fQWRA0DQbr2Qlu7Hu7L/CPtTfzeP99yI/MIwbWrlOf8ZOlNUf86hQMHBpHLQ+du6vknl1xR6l4RiU7LQ/7Oogg==}
+    engines: {node: '>=14'}
+    dependencies:
+      shim-streams: 0.0.2
+      web-streams-polyfill: 3.2.1
+    dev: false
+
+  /yield-stream@3.0.0:
+    resolution: {integrity: sha512-I0fHp7xcR+ilGKgtLP+6d0SxTLfJcLDX/iiTEQZtg0U/cqWKvcHy4D9em6adhs3emSgik8YAZ2Jmv7gc1kyuhA==}
+    engines: {node: '>=14'}
+    dependencies:
+      shim-streams: 0.0.2
+      web-streams-polyfill: 3.2.1
     dev: false
 
   /yocto-queue@0.1.0:
