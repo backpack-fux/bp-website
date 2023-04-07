@@ -50,6 +50,10 @@ jobs:
     - name: Install Pinecone dependencies
       run: pnpm add pinecone-client
 
-    - name: Deploy with Vercel
-      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-      run: vercel --token ${{ secrets.VERCEL_TOKEN }} --prod
+    - name: Deploy to Vercel
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      uses: vercel/action@v20
+      with:
+        vercel-token: ${{ secrets.VERCEL_TOKEN }}
+        vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+        vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
