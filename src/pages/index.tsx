@@ -2,8 +2,21 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import styles from '@bpwebsite/styles/Home.module.css'
+import getFingerprint from '../../fingerprint/fingerprint'
+import { useEffect } from 'react'
 
 const inter = Inter({ subsets: ['latin'] })
+
+// This is an example of how to use the fingerprint in your Next.js app
+useEffect(() => {
+  getFingerprint()
+    .then(visitorId => {
+      // Use the visitorId (fingerprint) for your chatbot logic
+    })
+    .catch(err => {
+      console.error('Error getting fingerprint:', err);
+    });
+}, []);
 
 export default function Home() {
   return (
