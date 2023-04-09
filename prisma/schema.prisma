@@ -12,7 +12,17 @@ datasource db {
 
 // Test Setup
 model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
+  id            String   @id @default(uuid())
+  fingerprint   String   @unique
+  createdAt     DateTime @default(now())
+  conversations Conversation[]
+}
+
+model Interaction {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  entry     String
+  speaker   String
+  createdAt DateTime @default(now())
 }
