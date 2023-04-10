@@ -1,26 +1,25 @@
 import { router, publicProcedure } from "../server";
 import { z } from "zod";
-import { documentService } from '../../services/documentService';
+import * as documentService from '../../services/documentService';
 
-// Document Router
-const documentRouter = router({
+export const documentRouter = router({
   get: publicProcedure
     .input(z.number())
     .query(async ({ input }) => {
-    return await documentService.getDocument(input);
+    return await documentService.getDocumentById(input);
   }),
   create: publicProcedure
-    .input(z.object({ title: z.string(), content: z.string(), tags: z.array(z.string()).optional() }))
+    .input(z.object({ title: z.string(), content: z.string(), tags: z.string().optional() }))
     .mutation(async ({ input }) => {
     return await documentService.createDocument(input);
   }),
   update: publicProcedure
-    .input(z.object({ id: z.number(), data: z.object({ title: z.string().optional(), content: z.string().optional(), tags: z.array(z.string()).optional() }) }))
+    .input(z.object({ id: z.number(), data: z.object({ title: z.string().optional(), content: z.string().optional(), tags: z.string().optional() }) }))
     .mutation(async ({ input }) => {
     return await documentService.updateDocument(input.id, input.data);
   }),
   delete: publicProcedure
-    .input(z.number())
+    .input(z.string())
     .mutation(async ({ input }) => {
     return await documentService.deleteDocument(input);
   }),

@@ -8,17 +8,20 @@ import { useEffect } from 'react'
 const inter = Inter({ subsets: ['latin'] })
 
 // This is an example of how to use the fingerprint in your Next.js app
-useEffect(() => {
-  getFingerprint()
-    .then(visitorId => {
-      // Use the visitorId (fingerprint) for your chatbot logic
-    })
-    .catch(err => {
-      console.error('Error getting fingerprint:', err);
-    });
-}, []);
+
 
 export default function Home() {
+
+  useEffect(() => {
+    getFingerprint()
+      .then(visitorId => {
+        // Use the visitorId (fingerprint) for your chatbot logic
+      })
+      .catch(err => {
+        console.error('Error getting fingerprint:', err);
+      });
+  }, []);
+  
   return (
     <>
       <Head>

@@ -1,6 +1,8 @@
 import { router, publicProcedure } from "../server";
 import { z } from "zod";
-import { chatMessageService } from '../services/chatMessageService';
+import { prisma } from '../../../prisma/prisma';
+import * as chatMessageService from '../../services/chatMessageService';
+
 
 // ChatMessage Router
 const chatMessageRouter = router({

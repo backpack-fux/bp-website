@@ -1,28 +1,74 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
+datasource db {
+  provider = "cockroachdb"
+  url      = env("DATABASE_URL")
+}
+
 generator client {
   provider = "prisma-client-js"
 }
 
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-}
-
-// Test Setup
 model User {
-  id            String   @id @default(uuid())
-  fingerprint   String   @unique
-  createdAt     DateTime @default(now())
-  conversations Conversation[]
+  id          Int          @id @default(sequence())
+  name        String
+  email       String       @unique
+  role        String
+
+  chatSessions ChatSession[]
+  chatMessages ChatMessage[] @relation("UserChatMessages") // Add this field for the opposite relation
 }
 
-model Interaction {
-  id        String   @id @default(uuid())
-  userId    String
-  user      User     @relation(fields: [userId], references: [id])
-  entry     String
-  speaker   String
+model EmbedDocument {
+  id      Int      @id @default(sequence())
+  title   String
+  content String
+  tags    String[] 
+
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@map("Document")
+}
+
+model EmbeddingModel {
+  id          Int      @id @default(sequence())
+  name        String
+  description String
+  embeddings  String
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ChatSession {
+  id        Int          @id @default(sequence())
+  user      User         @relation(fields: [userId], references: [id])
+  userId    Int
+
+  createdAt DateTime     @default(now())
+  chatMessages ChatMessage[]
+}
+
+model ChatMessage {
+  id           Int          @id @default(sequence())
+  chatSession  ChatSession  @relation(fields: [sessionId], references: [id])
+  sessionId    Int
+  user         User         @relation(fields: [userId], references: [id], name: "UserChatMessages")
+  userId       Int
+  content      String
+  responseType String
+
+  timestamp    DateTime     @default(now())
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+}
+
+model Batch {
+  id       Int          @id @default(sequence())
+  messages String[]
+  status   String
+
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
 }

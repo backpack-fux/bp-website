@@ -1,6 +1,10 @@
 import { router, publicProcedure } from "../server";
 import { z } from "zod";
 import { embeddingModelService } from '../services/embeddingModelService';
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
+
 
 // EmbeddingModel Router
 const embeddingModelRouter = router({

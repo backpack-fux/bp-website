@@ -1,7 +1,12 @@
 import { router, publicProcedure } from "../server";
 import { z } from "zod";
 import { batchService } from '../services/batchService';
+import { PrismaClient } from "@prisma/client";
 
+const prisma = new PrismaClient();
+
+// The batch service will specify what the batch router can do and how it hooks into cockroachdbprisma.
+// Cockroachdb takes the data before its processed into embeddings in pinecone
 // Batch Router
 const batchRouter = router({
   get: publicProcedure
