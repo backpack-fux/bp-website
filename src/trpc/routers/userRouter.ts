@@ -4,7 +4,7 @@ import { userService } from '../../services/userService';
 import { prisma } from '../../../prisma/prisma';
 
 // User Router
-const userRouter = router({
+export const userRouter = router({
   getUser: publicProcedure
     .input(z.number())
     .query(async ({ input }) => {

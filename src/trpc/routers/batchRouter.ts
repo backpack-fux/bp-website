@@ -8,7 +8,7 @@ const prisma = new PrismaClient();
 // The batch service will specify what the batch router can do and how it hooks into cockroachdbprisma.
 // Cockroachdb takes the data before its processed into embeddings in pinecone
 // Batch Router
-const batchRouter = router({
+export const batchRouter = router({
   get: publicProcedure
     .input(z.number())
     .query(async ({ input }) => {

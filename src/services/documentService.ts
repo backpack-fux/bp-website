@@ -1,7 +1,7 @@
 // src/services/documentService.ts
 import { prisma } from '../../prisma/prisma';
 import { EmbedDocument } from '../models/EmbedDocument';
-import { logger } from '../utils/logger';
+import logger from '../utils/logger';
 
 export const createDocument = async (data: Omit<EmbedDocument, 'id'>): Promise<EmbedDocument> => {
   logger.info(`Creating document with data: ${JSON.stringify(data)}`);
@@ -53,4 +53,8 @@ export const searchDocuments = async (searchTerm: string): Promise<EmbedDocument
   });
   logger.info(`Found documents: ${JSON.stringify(documents)}`);
   return documents as EmbedDocument[];
+};
+
+export const deleteAllDocuments = async (): Promise<void> => {
+  await prisma.embedDocument.deleteMany();
 };

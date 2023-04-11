@@ -7,7 +7,7 @@ const prisma = new PrismaClient();
 
 
 // EmbeddingModel Router
-const embeddingModelRouter = router({
+export const embeddingModelRouter = router({
   get: publicProcedure
     .input(z.number())
     .query(async ({ input }) => {

@@ -1,16 +1,15 @@
-// src/utils/logger.ts
-import winston from 'winston';
+//src/utils/logger.ts
+import serverLogger from "./serverLogger";
+import clientLogger from "./clientLogger";
 
-const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.combine(
-    winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
-    winston.format.printf(({ timestamp, level, message }) => `[${timestamp}] ${level.toUpperCase()}: ${message}`),
-  ),
-  transports: [
-    new winston.transports.Console(),
-    new winston.transports.File({ filename: 'logs.log' }),
-  ],
-});
+let logger: typeof clientLogger;
 
-export { logger };
+if (typeof window !== "undefined") {
+  logger = clientLogger;
+} else {
+  const { default: serverLogger } = require("./serverLogger");
+  logger = serverLogger;
+}
+
+export default logger;
+
