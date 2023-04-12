@@ -1,23 +1,24 @@
 // components/Chat/ChatInput.tsx
-
 import React, { useState } from 'react';
 import { trpc } from '../../lib/trpc/trpc';
 
 interface ChatInputProps {
+  onSendMessage: (text: string) => void;
   onReceiveMessage: (message: string) => void;
 }
 
-const ChatInput: React.FC<ChatInputProps> = ({ onReceiveMessage }) => {
+const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, onReceiveMessage }) => {
   const [message, setMessage] = useState('');
 
-  const sendMessageMutation = trpc.chatbot.useMutation('sendMessage');
+  const sendMessageQuery = trpc.chatbot.useQuery('sendMessage', { enabled: false });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (message.trim() !== '') {
+      onSendMessage(message);
       try {
-        const response = await sendMessageMutation.mutateAsync(message);
-        onReceiveMessage(response);
+        const response = await sendMessageQuery.refetch({ text: message });
+        onReceiveMessage(response.data);
         setMessage('');
       } catch (error) {
         console.error('Error sending message:', error);
