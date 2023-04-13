@@ -1,8 +1,8 @@
 // pages/index.tsx
 import React, { useState } from 'react';
-import MainLayout from '../components/Layout/MainLayout';
-import ChatWindow from '../components/Chat/ChatWindow';
-import ChatInput from '../components/Chat/ChatInput';
+import MainLayout from './components/MainLayout';
+import ChatWindow from './components/ChatWindow';
+import ChatInput from './components/ChatInput';
 import { randomUUID } from 'crypto';
 
 interface Message {

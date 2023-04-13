@@ -1,8 +1,8 @@
-import type { AppRouter } from '../../server/routers/_app';
+import type { AppRouter } from '../../routers/_app';
 import { createTRPCNext } from '@trpc/next';
 import { httpBatchLink } from '@trpc/client';
 
-export const trpc = createTRPCNext<AppRouter>({
+export const trpcClient = createTRPCNext<AppRouter>({
   config() {
     const API_URL = process.env.NEXT_PUBLIC_TRPC_API_URL;
     if (!API_URL) {

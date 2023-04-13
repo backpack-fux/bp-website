@@ -1,6 +1,4 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
+//prisma/schema.prisma
 datasource db {
   provider = "cockroachdb"
   url      = env("DATABASE_URL")
@@ -8,4 +6,31 @@ datasource db {
 
 generator client {
   provider = "prisma-client-js"
+}
+
+model User {
+  id        String    @id @default(uuid())
+  fingerprint String
+  conversations Conversation[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Conversation {
+  id          String          @id @default(uuid())
+  userId      String
+  user        User            @relation(fields: [userId], references: [id])
+  messages    ChatMessage[]
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+}
+
+model ChatMessage {
+  id            String         @id @default(uuid())
+  conversationId String
+  conversation   Conversation  @relation(fields: [conversationId], references: [id])
+  speaker        String
+  entry          String
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
 }
