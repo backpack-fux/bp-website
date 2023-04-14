@@ -1,4 +1,4 @@
-// src/components/ChatInterface.tsx
+//pages/components/ChatInterface.tsx
 import React, { useState } from 'react';
 import './ChatInterface.css';
 import UserInput from './UserInput';

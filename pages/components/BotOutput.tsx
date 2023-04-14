@@ -1,4 +1,4 @@
-// src/components/BotOutput.tsx
+// pages/components/BotOutput.tsx
 import React from 'react';
 
 interface ChatMessage {

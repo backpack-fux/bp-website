@@ -1,4 +1,4 @@
-// src/components/UserInput.tsx
+// pages/components/UserInput.tsx
 import React from 'react';
 
 interface UserInputProps {

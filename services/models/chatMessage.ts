@@ -1,4 +1,4 @@
-import { Conversation } from './conversation';
+//service/models/chatMessage.ts
 import { z } from 'zod';
 
   // Define the ChatMessage schema
@@ -11,3 +11,5 @@ export const ChatMessage = z.object({
   createdAt: z.instanceof(Date),
   updatedAt: z.instanceof(Date),
 });
+
+export type ChatMessageType = z.infer<typeof ChatMessage>;

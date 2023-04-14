@@ -7,13 +7,7 @@ export const sendMessage = createAsyncThunk(
   async (message: string, { extra }) => {
     const chatApi = extra as ChatMessageRouter;
     // Pass the message as an object with the correct key
-    const response = await chatApi.sendMessage({
-        input: message,
-        ctx: undefined,
-        rawInput: undefined,
-        path: '',
-        type: 'query'
-    });
+    const response = await chatApi.sendMessage({ input: message });
     return response;
   }
 );
@@ -23,13 +17,7 @@ export const addChatMessage = createAsyncThunk(
   async (input: { conversationId: string; speaker: 'user' | 'chatbot'; entry: string }, { extra }) => {
     const chatApi = extra as ChatMessageRouter;
     // Pass the input object with the correct key
-    const newMessage = await chatApi.addChatMessage({
-        input,
-        ctx: undefined,
-        rawInput: undefined,
-        path: '',
-        type: 'query'
-    });
+    const newMessage = await chatApi.addChatMessage({ input });
     return newMessage;
   }
 );

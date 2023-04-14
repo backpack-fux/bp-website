@@ -1,4 +1,4 @@
-//server/models/user.ts
+//services/models/user.ts
 import { z } from 'zod';
 
 // Define the User schema

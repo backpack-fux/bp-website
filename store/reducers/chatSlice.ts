@@ -1,36 +1,50 @@
-// src/reducers/chatSlice.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from '../store';
-import { sendMessage, addChatMessage } from '../actions/chatActions';
+import { ChatMessageType } from '../../services/models/chatMessage';
+import { ConversationType } from '../../services/models/conversation';
 
-export interface ChatMessage {
-  id: string;
-  speaker: 'user' | 'chatbot';
-  content: string;
+// Use the imported ChatMessage type in ChatBotState
+export interface ChatBotState {
+  status: 'idle' | 'loading' | 'succeeded' | 'failed';
+  conversation: ConversationType; // Use ConversationType here
+  error: string | null;
 }
 
-interface ChatState {
-  messages: ChatMessage[];
-}
-
-const initialState: ChatState = {
-  messages: [],
+const initialState: ChatBotState = {
+  conversation: {
+    id: '',
+    userId: '',
+    user: {
+      id: '',
+      fingerprint: '',
+      conversations: [],
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    messages: [],
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  status: 'idle',
+  error: null,
 };
 
-export const chatSlice = createSlice({
-  name: 'chat',
+export const chatbotSlice = createSlice({
+  name: 'chatbot',
   initialState,
-  reducers: {},
-  extraReducers: (builder) => {
-    builder.addCase(sendMessage.fulfilled, (state, action: PayloadAction<string>) => {
-      state.messages.push({ id: Date.now().toString(), speaker: 'chatbot', content: action.payload });
-    });
-    builder.addCase(addChatMessage.fulfilled, (state, action: PayloadAction<ChatMessage>) => {
-      state.messages.push(action.payload);
-    });
+  reducers: {
+    // Use the imported ConversationType in the PayloadAction
+    setConversation: (state, action: PayloadAction<ConversationType>) => {
+      state.conversation = action.payload;
+    },
+    addChatMessage: (state, action: PayloadAction<ChatMessageType>) => {
+      state.conversation.messages.push(action.payload);
+    },
+    setStatus: (state, action: PayloadAction<ChatBotState['status']>) => {
+      state.status = action.payload;
+    },
   },
 });
 
-export const selectMessages = (state: RootState) => state.chat.messages;
+export const { setConversation, addChatMessage, setStatus } = chatbotSlice.actions;
 
-export default chatSlice.reducer;
+export default chatbotSlice.reducer;
