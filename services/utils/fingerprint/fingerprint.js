@@ -1,8 +1,4 @@
 import FingerprintJS from '@fingerprintjs/fingerprintjs';
-import dotenv from 'dotenv';
-
-dotenv.config({ path: '.env' });
-
 
 export async function getFingerprint() {
   // Initialize an agent with your API key

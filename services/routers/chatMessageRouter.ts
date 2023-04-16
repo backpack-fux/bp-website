@@ -1,4 +1,4 @@
-// server/routers/chatMessageRouter.ts
+// services/routers/chatMessageRouter.ts
 import { z } from 'zod';
 import { publicProcedure, router } from '../utils/trpc/trpc';
 import chatBot from '../libs/langchain/langchain';

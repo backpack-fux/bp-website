@@ -1,4 +1,4 @@
-// server/routers/_app.ts
+// services/routers/_app.ts
 import { router } from '../utils/trpc/trpc';
 import { chatMessageRouter } from './chatMessageRouter';
 import { conversationRouter } from './conversationRouter';

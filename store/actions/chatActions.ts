@@ -1,4 +1,4 @@
-// src/actions/chatActions.ts
+// store/actions/chatActions.ts
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ChatMessageRouter } from '../../services/routers/chatMessageRouter';
 

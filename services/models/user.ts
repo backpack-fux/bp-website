@@ -9,7 +9,3 @@ export const User = z.object({
   createdAt: z.instanceof(Date),
   updatedAt: z.instanceof(Date),
 });
-
-
-
-

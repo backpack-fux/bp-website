@@ -1,6 +1,8 @@
+//services/utils/trpc/trpcHooks.ts
 import { httpBatchLink, loggerLink } from '@trpc/client';
 import { createTRPCNext } from '@trpc/next';
 import type { AppRouter } from '../../routers/_app';
+import { Context } from './trpcContext';
 
 function getBaseUrl() {
   if (typeof window !== 'undefined')
@@ -16,8 +18,14 @@ function getBaseUrl() {
   return `http://localhost:${process.env.PORT ?? 3000}`;
 }
 
-export const trpc = createTRPCNext<AppRouter>({
-  config() {
+type CreateTRPCNextWithCtx = typeof createTRPCNext & {
+  ctx?: Context;
+};
+
+const createTRPCNextWithCtx: CreateTRPCNextWithCtx = (createTRPCNext as unknown) as CreateTRPCNextWithCtx;
+
+export const trpc = createTRPCNextWithCtx<AppRouter>({
+  config(ctx) {
     return {
       links: [
         loggerLink({
@@ -35,6 +43,7 @@ export const trpc = createTRPCNext<AppRouter>({
           },
         }),
       ],
+      ctx,
     };
   },
   ssr: false,

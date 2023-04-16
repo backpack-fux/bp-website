@@ -1,4 +1,4 @@
-// utils/trpc/trpc.ts
+//services/utils/trpc/trpc.ts
 import { initTRPC } from '@trpc/server';
 
 const t = initTRPC.create();

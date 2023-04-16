@@ -1,3 +1,4 @@
+//store/reducers/chatSlice.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ChatMessageType } from '../../services/models/chatMessage';
 import { ConversationType } from '../../services/models/conversation';
