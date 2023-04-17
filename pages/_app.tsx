@@ -1,8 +1,8 @@
 // pages/_app.tsx
-import type { AppType } from 'next/app';
+import type { AppProps, AppType } from 'next/app';
 import { trpcNext } from '../services/utils/trpc/trpcNext';
 
-const MyApp: AppType = ({ Component, pageProps }) => {
+const MyApp: AppType = ({ Component, pageProps }: AppProps) => {
   return <Component {...pageProps} />;
 };
 

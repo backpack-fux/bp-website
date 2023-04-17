@@ -1,4 +1,4 @@
-// hooks/useChatMessages.ts
+// services/utils/hooks/useChatMessages.ts
 import { trpcNext } from '../trpc/trpcNext';
 
 export const useChatMessages = () => {
