@@ -3,7 +3,6 @@ import { z } from 'zod';
 import { publicProcedure, router } from '../utils/trpc/trpc';
 import chatBot from '../libs/langchain/langchain';
 import { HumanChatMessage } from 'langchain/schema';
-import { prisma } from '../../prisma/prisma';
 import { buildInquiry } from '../libs/inquiryBuilder/inquiryBuilder';
 
 // Define the callChatbotBackend function
@@ -26,9 +25,9 @@ export const chatMessageRouter = router({
       message: z.string().describe('The message to send to the chatbot'),
       userId: z.string().describe('The user ID for fetching conversation history'),
     }))
-    .query(async ({ input }) => {
+    .query(async ({ input, ctx }) => {
       // Fetch conversation history
-      const conversation = await prisma.conversation.findUnique({
+      const conversation = await ctx.prisma.conversation.findUnique({
         where: { id: input.userId},
         include: {
           messages: {
@@ -48,10 +47,10 @@ export const chatMessageRouter = router({
   addChatMessage: publicProcedure
     .meta({ description: 'Add a chat message to the database' })
     .input(addChatMessageInput)
-    .query(async ({ input }) => {
+    .query(async ({ input, ctx }) => {
       console.log('Input:', input)
 
-      const newMessage = await prisma.chatMessage.create({
+      const newMessage = await ctx.prisma.chatMessage.create({
         data: {
           conversationId: input.conversationId,
           speaker: input.speaker,
@@ -63,9 +62,9 @@ export const chatMessageRouter = router({
   getChatMessagesByConversation: publicProcedure
     .meta({ description: 'Get chat messages by conversation ID' })
     .input(z.string().describe('The conversation ID to fetch messages for'))
-    .query(async ({ input }) => {
+    .query(async ({ input, ctx }) => {
       const conversationId = input;
-      const messages = await prisma.chatMessage.findMany({
+      const messages = await ctx.prisma.chatMessage.findMany({
         where: { conversationId },
         orderBy: { createdAt: 'asc' },
       });
@@ -74,9 +73,9 @@ export const chatMessageRouter = router({
   deleteChatMessage: publicProcedure
     .meta({ description: 'Delete a chat message by its ID' })
     .input(z.string().describe('The ID of the chat message to delete'))
-    .query(async ({ input }) => {
+    .query(async ({ input, ctx }) => {
       const messageId = input;
-      const deletedMessage = await prisma.chatMessage.delete({
+      const deletedMessage = await ctx.prisma.chatMessage.delete({
         where: { id: messageId },
       });
       return deletedMessage;
