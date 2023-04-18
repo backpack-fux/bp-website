@@ -1,6 +1,6 @@
 // pages/components/UserInput.tsx
 import React from 'react';
-import './UserInput.css';
+import styles from './UserInput.module.css';
 
 interface UserInputProps {
   input: string;
@@ -14,16 +14,22 @@ const UserInput: React.FC<UserInputProps> = ({ input, setInput, onSendMessage, i
     setInput(e.target.value);
   };
 
-  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       onSendMessage();
     }
   };
 
   return (
-    <div className="user-input">
-      <input type="text" value={input} onChange={handleInputChange} onKeyPress={handleKeyPress} />
-      <button onClick={onSendMessage} disabled={isLoading || input.trim() === ''}>
+    <div className={styles.userInput}>
+      <input
+        type="text"
+        value={input}
+        onChange={handleInputChange}
+        onKeyDown={handleKeyDown}
+        className={styles.input}
+      />
+      <button onClick={onSendMessage} disabled={isLoading || input.trim() === ''} className={styles.sendButton}>
         Send
       </button>
     </div>

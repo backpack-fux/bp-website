@@ -1,11 +1,6 @@
 // pages/components/BotOutput.tsx
 import React from 'react';
-
-interface ChatMessage {
-  id: string;
-  speaker: 'user' | 'chatbot';
-  content: string;
-}
+import { ChatMessage } from '@prisma/client';
 
 interface BotOutputProps {
   messages: ChatMessage[];
@@ -19,7 +14,7 @@ const BotOutput: React.FC<BotOutputProps> = ({ messages }) => {
           key={message.id}
           className={`message ${message.speaker === 'user' ? 'user-message' : 'chatbot-message'}`}
         >
-          {message.content}
+          {message.entry}
         </div>
       ))}
     </div>

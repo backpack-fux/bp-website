@@ -10,7 +10,7 @@ export const conversationRouter = router({
   createConversation: publicProcedure
     .meta({ description: 'Create a new conversation' })
     .input(createConversationInput)
-    .query(async ({ input, ctx }) => {
+    .mutation(async ({ input, ctx }) => {
       const newConversation = await ctx.prisma.conversation.create({
         data: {
           userId: input.userId,

@@ -1,3 +1,4 @@
+// pages/index.tsx
 import Head from 'next/head';
 import React from 'react';
 import ChatInterface from './components/ChatInterface';
@@ -7,7 +8,7 @@ const Home: React.FC = () => {
     <div>
       <Head>
         <title>ChatGPT</title>
-        <meta name="description" content="ChatGPT powered by OpenAI" />
+        <meta name="description" content="ChatGPT powered by Your Mom" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>

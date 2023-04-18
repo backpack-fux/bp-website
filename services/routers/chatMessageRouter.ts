@@ -25,7 +25,7 @@ export const chatMessageRouter = router({
       message: z.string().describe('The message to send to the chatbot'),
       userId: z.string().describe('The user ID for fetching conversation history'),
     }))
-    .query(async ({ input, ctx }) => {
+    .mutation(async ({ input, ctx }) => {
       // Fetch conversation history
       const conversation = await ctx.prisma.conversation.findUnique({
         where: { id: input.userId},
@@ -47,7 +47,7 @@ export const chatMessageRouter = router({
   addChatMessage: publicProcedure
     .meta({ description: 'Add a chat message to the database' })
     .input(addChatMessageInput)
-    .query(async ({ input, ctx }) => {
+    .mutation(async ({ input, ctx }) => {
       console.log('Input:', input)
 
       const newMessage = await ctx.prisma.chatMessage.create({
@@ -73,7 +73,7 @@ export const chatMessageRouter = router({
   deleteChatMessage: publicProcedure
     .meta({ description: 'Delete a chat message by its ID' })
     .input(z.string().describe('The ID of the chat message to delete'))
-    .query(async ({ input, ctx }) => {
+    .mutation(async ({ input, ctx }) => {
       const messageId = input;
       const deletedMessage = await ctx.prisma.chatMessage.delete({
         where: { id: messageId },
