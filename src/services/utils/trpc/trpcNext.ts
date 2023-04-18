@@ -2,6 +2,8 @@ import { httpBatchLink, loggerLink } from '@trpc/client';
 import { createTRPCNext } from '@trpc/next';
 import type { AppRouter } from '../../routers/_app';
 import superjson from 'superjson';
+import { createContext } from './trpcContext';
+import { NextApiRequest, NextApiResponse } from 'next';
 
 function getUrl() {
   const url = process.env.VERCEL_URL
@@ -14,6 +16,9 @@ function getUrl() {
 export const trpcNext = createTRPCNext<AppRouter>({
   config({ ctx }) {
     console.log('trpcNext config', ctx);
+
+    // Cast ctx.req as NextApiRequest | null
+    const createdContext = createContext({ req: ctx?.req as NextApiRequest | null, res: ctx?.res as NextApiResponse | null });
 
     if (typeof window !== 'undefined') {
       return {
@@ -28,6 +33,7 @@ export const trpcNext = createTRPCNext<AppRouter>({
             url: "/api/trpc",
           }),
         ],
+        ctx: createdContext,
       };
     }
 
@@ -48,7 +54,7 @@ export const trpcNext = createTRPCNext<AppRouter>({
           },
         }),
       ],
-      ctx,
+      ctx: createdContext,
     };
   },
   ssr: true,

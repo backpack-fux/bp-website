@@ -30,6 +30,7 @@
     "http": "link:@trpc/server/adapters/http",
     "langchain": "^0.0.49",
     "next": "13.2.4",
+    "next-auth": "^4.22.0",
     "nextjs-openai": "^4.0.0",
     "openai-streams": "^5.0.0",
     "pg": "^8.10.0",
