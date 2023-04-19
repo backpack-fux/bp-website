@@ -1,9 +1,10 @@
 //services/utils/trpc/trpc.ts
 import { initTRPC } from '@trpc/server';
-import { createContext } from './trpcContext';
+import { Context } from './trpcContext';
 import superjson from 'superjson';
 
-const t = initTRPC.context<typeof createContext>().create({ transformer: superjson });
+const t = initTRPC.context<Context>().create({ transformer: superjson });
+console.log("initTRPC", t);
 
 export const router = t.router;
 export const middleware = t.middleware;

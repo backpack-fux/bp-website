@@ -9,20 +9,31 @@ function getUrl() {
   const url = process.env.VERCEL_URL
     ? `https://${process.env.VERCEL_URL}/api/trpc`
     : "http://localhost:3000/api/trpc/";
+    console.log("url", url);
 
   return url;
 }
 
+console.log("createContext 2", createContext);
 export const trpcNext = createTRPCNext<AppRouter>({
   config({ ctx }) {
-    console.log('trpcNext config', ctx);
+    console.log("ctx", ctx);
+    console.log("ctx.req", ctx?.req);
+    console.log("ctx.res", ctx?.res);
 
-    // Cast ctx.req as NextApiRequest | null
+    const headers = ctx?.req?.headers || {};
+
     const createdContext = createContext({ req: ctx?.req as NextApiRequest | null, res: ctx?.res as NextApiResponse | null });
+    console.log("createdContext", createdContext);
+
+    const commonConfig = {
+      transformer: superjson,
+      ctx: createdContext,
+    };
 
     if (typeof window !== 'undefined') {
       return {
-        transformer: superjson,
+        ...commonConfig,
         links: [
           loggerLink({
             enabled: (opts) =>
@@ -33,12 +44,11 @@ export const trpcNext = createTRPCNext<AppRouter>({
             url: "/api/trpc",
           }),
         ],
-        ctx: createdContext,
       };
     }
 
     return {
-      transformer: superjson,
+      ...commonConfig,
       links: [
         loggerLink({
           enabled: (opts) =>
@@ -49,13 +59,15 @@ export const trpcNext = createTRPCNext<AppRouter>({
           url: getUrl(),
           async headers() {
             return {
+              ...headers,
               // authorization: getAuthCookie(),
             };
           },
         }),
       ],
-      ctx: createdContext,
     };
   },
   ssr: true,
 });
+
+console.log("trpcNext", trpcNext);

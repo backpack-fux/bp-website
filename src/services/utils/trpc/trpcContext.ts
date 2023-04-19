@@ -1,4 +1,4 @@
-// services/utils/trpc/context.ts
+// services/utils/trpc/trpcContext.ts
 import { prisma } from '../../../../prisma/prisma';
 import type { inferAsyncReturnType } from '@trpc/server';
 import type { NextApiRequest, NextApiResponse } from 'next';
@@ -10,14 +10,26 @@ export async function createContextInner() {
   };
 }
 
-export async function createContext(opts: { req: NextApiRequest | null, res: NextApiResponse | null }) {
-  // Check if req is null before calling getSession
-  const session = opts.req ? await getSession({ req: opts.req }) : null;
-  const contextInner = await createContextInner();
-  return {
-    ...contextInner,
-    session, // add session to the context
-  };
+export async function createContext(opts: { req: NextApiRequest | null, res: NextApiResponse | null }): Promise<Context> {
+  try {
+    console.log("opts.req", opts.req);
+    const sessionPromise = opts.req ? getSession({ req: opts.req }) : null;
+    console.log("sessionPromise", sessionPromise);
+    console.log("opts.req", opts.req);
+    const contextInner = await createContextInner();
+
+    return {
+      ...contextInner,
+      session: sessionPromise,
+    };
+  } catch (error) {
+    // Handle the error appropriately, e.g., return an empty context, or throw a custom error
+    return {
+      prisma,
+      session: null,
+    };
+  }
 }
 
-export type Context = inferAsyncReturnType<typeof createContextInner>;
+export type ContextInner = inferAsyncReturnType<typeof createContextInner>;
+export type Context = ContextInner & { session: ReturnType<typeof getSession> | null };
